@@ -23,6 +23,8 @@ module Eldritch
     #   task.start  # calls the block in parallel
     def start
       @thread = Thread.new &@block
+      @thread[:request_store] = Thread.current[:request_store]
+      @thread[:activesupport_tagged_logging_tags] = Thread.current[:activesupport_tagged_logging_tags]
       @thread.eldritch_task = self
     end
 
